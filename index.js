@@ -8,6 +8,7 @@ class ProductManager{
         if (!productDb) {
             return `Producto no Encontrado  con el id: ${id}` 
         }
+        return  productDb
     }
     addProduct =(newProduct) =>{
         const productDb = this.products.find (product =>product.code === newProduct.code)
@@ -43,5 +44,23 @@ console.log(productos.addProduct({
     stock:100
 }))
 
+console.log(productos.addProduct({
+    title: 'Tomo-Chan is Girl',
+    description:'Manga Escolar y Romance',
+    price: 500,
+    img: '...',
+    code:3,
+    stock:100
+}))
+
+console.log(productos.addProduct({
+    title: 'Aku no Hana',
+    description:'Manga de Historia de Vida',
+    price: 500,
+    img: '...',
+    code:4,
+    stock:100
+}))
+
 console.log(productos.getProducts())
-console.log(productos.getProductById(3))
+console.log(productos.getProductById(5))
