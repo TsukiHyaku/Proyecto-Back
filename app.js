@@ -34,22 +34,6 @@ app.get('/products/:id',(req, res)=>{
     res.send(product)
 })
 
-/* app.get('/products', (req, res)=>{
-    console.log(req.products)
-    const {limit} = req.products
-    res.send({
-        limit
-    })
-}) */
-
-
-/* clase 7 */
-
-/* app.get('/query', (req, res)=>{
-    console.log(req.query)
-    res.send(`query`)
-}) */
-
 app.listen(PORT, err=>{
     if (err) console.log(err)
     console.log(`Escuchando en el puerto en el puerto ${PORT}`)
