@@ -1,12 +1,18 @@
 const fs = require('fs')
 
-/* ------------------------------------------ DECLARO LA CLASE ------------------------------------------ */
+
 class ProductManager{
-    constructor(path){
+    constructor(path) {
         this.products = []
         this.path = path
     }
-    
+    getProducts = ( ) => this.products
+    getProductById = ( id ) => { 
+        const productDb = this.products.find (product =>product.id === id)
+        if (!productDb) {
+            return `Producto no Encontrado  con el id: ${id}` 
+        }
+    }
     addProduct = async (newItem) => {
         if (newItem.title === '' || newItem.description === '' || newItem.price === '' || newItem.thumbnail === '' || newItem.code === '' || newItem.stock === '')  {
         return console.log(`Debe completar todos los campos`)
@@ -76,27 +82,3 @@ class ProductManager{
 
 
     const productos = new ProductManager('./files/productos.json')
-
-    // productos.addProduct({
-    //     title: 'producto 3',
-    //     description: 'esto es un producto',
-    //     price: 2500,
-    //   thumbnail: 'ruta imagen',
-    //   code: 2,
-    //   stock: 100
-    // })
-
-    // console.log(productos.getProducts())
-
-    // console.log(productos.getProductById(2))
-
-    // productos.updateProduct(2, {
-    //   title: 'producto 2 actulizado',
-    //   description: 'esto es un producto',
-    //   price: 5000,
-    //   thumbnail: 'ruta imagen',
-    //   code: 2,
-    //   stock: 100
-    // })
-
-    // productos.deleteProduct(2)
