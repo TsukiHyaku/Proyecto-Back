@@ -15,13 +15,13 @@ class ProductManager{
     }
     addProduct = async (newItem) => {
         if (newItem.title === '' || newItem.description === '' || newItem.price === '' || newItem.thumbnail === '' || newItem.code === '' || newItem.stock === '')  {
-        return console.log(`Debe completar todos los campos`)
+        return `Debe completar todos los campos`
         }
         let productDb = await this.getProducts()
         const data = await productDb.find(product => product.code === newItem.code)
         try {
         if (data) {
-            return console.log(`El código de producto ya existe`)
+            return `El código de producto ya existe`
         }
         if (productDb.length === 0) {
             newItem.id = 1
@@ -52,16 +52,16 @@ class ProductManager{
         const data = await fs.promises.readFile(this.path, 'utf-8')
         const productDb = JSON.parse(data).find(product => product.id === id)
         if (!productDb) {
-        return console.log(`No existe producto con el id: ${id}`)
+        return `No existe producto con el id: ${id}`
         }
-        return console.log(productDb)
+        return  `${productDb}`
     }
     updateProduct = async (id, campoActualizar) => {
         const data = await fs.promises.readFile(this.path, 'utf-8')
         const productDb = await JSON.parse(data)
         const index = await productDb.findIndex(product => product.id === id)
         if (index === -1) {
-        return console.log(`No existe producto con el id: ${id}`)
+        return `No existe producto con el id: ${id}`
         }
         productDb[index] = { ...campoActualizar, id: productDb[index].id }
         fs.promises.writeFile(this.path, JSON.stringify(productDb, null,'\t'))
@@ -72,7 +72,7 @@ class ProductManager{
         const productDb = await JSON.parse(data)
         const index = await productDb.findIndex(product => product.id === id)
         if (index === -1) {
-        return console.log(`No existe producto con el id: ${id}`)
+        return  `No existe producto con el id: ${id}`
         }
         productDb.splice(index, 1)
         fs.promises.writeFile(this.path, JSON.stringify(productDb, null,'\t'))
