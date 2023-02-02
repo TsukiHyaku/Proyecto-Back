@@ -7,24 +7,23 @@ const PORT = 8080
 
 app.use(express.urlencoded({extended:true}))
 
-app.get('/products', async (req, res) => {
-  const { limit } = req.query
+app.get("/products", async (req, res)=>{
+  const {limit} = req.query
   try {
-    const data = await productos.getProducts()
-    limit ? res.send(data.filter(product => product.id <= limit)) : res.send(data)
+      const data = await productos.getProducts()
+      limit ? res.send(data.slice(0, limit)) : res.send(data)
   } catch (error) {
-    console.log(error)
+      console.log(error)
   }
 })
 
-app.get("/products/:pid", async (req, res)=>{
-  const pid = req.params.pid
-  try {
+app.get("/products/:pId", async (req, res)=>{
+  const pid = req.params.pId
+  if (!pid){
+      console.log({error:'id no encontrado'})
+  } else {
       const data = await productos.getProducts()
-
-      pid ? res.send(data.find(product => product.id.toString() ===  pid)) : res.send(data)
-  } catch (error) {
-      console.log(error)
+      pid ? res.send(data.find(product => product.id == pid)) : res.send(data)
   }
 })
 
