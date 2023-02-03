@@ -7,25 +7,28 @@ const PORT = 8080
 
 app.use(express.urlencoded({extended:true}))
 
-app.get("/products", async (req, res)=>{
-  const {limit} = req.query
+app.get("/products", async (req, res) => {
   try {
-      const data = await productos.getProducts()
-      limit ? res.send(data.slice(0, limit)) : res.send(data)
+    const { limit } = req.query;
+    const data = await productos.getProducts();
+    const products = data.slice(0, limit);
+    res.send(products);
   } catch (error) {
-      console.log(error)
+    res.send(error);
   }
-})
+});
 
-app.get("/products/:pId", async (req, res)=>{
-  const pid = req.params.pId
-  if (!pid){
-      console.log({error:'id no encontrado'})
-  } else {
-      const data = await productos.getProducts()
-      pid ? res.send(data.find(product => product.id == pid)) : res.send(data)
+app.get("/products/:pId", async (req, res) => {
+  const pid = req.params.pId;
+  if (!pid) {
+    return res.status(400).json({ error: "id no valido" });
   }
-})
+  const product = await productos.getProductById();
+  if (!product) {
+    return res.status(404).json({ error: "Producto no encontrado" });
+  }
+  return res.send(product);
+});
 
 app.listen(PORT, err => {
   if (err) console.log(err)
