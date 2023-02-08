@@ -2,10 +2,10 @@ import fs from 'fs'
 
 /* ------------------------------------------ DECLARO LA CLASE ------------------------------------------ */
 export class ProductManager{
-  #ruta = './files/src/productos.json'
-  constructor(){
+  
+  constructor(path){
     this.products = []
-    this.path = this.#ruta
+    this.path = path;
   }
   
   addProduct = async (newItem) => {
@@ -20,7 +20,7 @@ export class ProductManager{
       await fs.promises.writeFile(this.path, JSON.stringify(productDb, null,'\t'))
       console.log('Producto cargado en la base de datos');
     } catch (error) {
-      console.log(error);
+      return  error;
     }
   }
   getProducts = async () => {
@@ -33,7 +33,7 @@ export class ProductManager{
       await fs.promises.writeFile(this.path, '[]', 'utf-8')
       return []
     } catch (error) {
-      console.log(error);
+      return  error;
     }
   }
   getProductById = async (id) => {
@@ -67,60 +67,3 @@ export class ProductManager{
     console.log('Producto eliminado de la base de datos');
   }
 }
-
-
-// productos.addProduct({
-//     title: 'producto 1',
-//     description: 'esto es un producto',
-//     price: 500,
-//   thumbnail: 'ruta imagen',
-//   code: 1,
-//   stock: 100
-// })
-// productos.addProduct({
-//     title: 'producto 2',
-//     description: 'esto es un producto',
-//     price: 1000,
-//   thumbnail: 'ruta imagen',
-//   code: 2,
-//   stock: 100
-// })
-// productos.addProduct({
-//     title: 'producto 3',
-//     description: 'esto es un producto',
-//     price: 1500,
-//   thumbnail: 'ruta imagen',
-//   code: 3,
-//   stock: 100
-// })
-// productos.addProduct({
-//     title: 'producto 4',
-//     description: 'esto es un producto',
-//     price: 2000,
-//   thumbnail: 'ruta imagen',
-//   code: 4,
-//   stock: 100
-// })
-// productos.addProduct({
-//     title: 'producto 5',
-//     description: 'esto es un producto',
-//     price: 2500,
-//   thumbnail: 'ruta imagen',
-//   code: 5,
-//   stock: 100
-// })
-
-// console.log(productos.getProducts())
-
-// console.log(productos.getProductById(2))
-
-// productos.updateProduct(2, {
-//   title: 'producto 2 actulizado',
-//   description: 'esto es un producto',
-//   price: 5000,
-//   thumbnail: 'ruta imagen',
-//   code: 2,
-//   stock: 100
-// })
-
-// productos.deleteProduct(2)

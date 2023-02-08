@@ -1,6 +1,6 @@
 [
 	{
-		"title": "Producto 1 (Updated)",
+		"title": "Producto 1",
 		"description": "Descripción producto",
 		"price": 100,
 		"thumbnail": "link",
@@ -10,7 +10,7 @@
 		"id": 1
 	},
 	{
-		"title": "Producto 2 (Updated)",
+		"title": "Producto 2",
 		"description": "Descripción producto",
 		"price": 100,
 		"thumbnail": "link",

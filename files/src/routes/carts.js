@@ -1,6 +1,6 @@
 import { Router } from 'express'
-import { ProductManager } from '../productManager.js'
-import { CartManager } from '../cartManager.js'
+import { ProductManager } from '../classManager/productManager.js'
+import { CartManager } from '../classManager/cartManager.js'
 
 const router = Router()
 
@@ -21,7 +21,7 @@ router.get('/:cid', async (req, res) => {
     res.send({mensaje: `Lista de productos del carrito con id ${cid}`,
               productos: cartProducts.products})
   } catch (error) {
-    console.log(error);
+    return error;
   }
 })
 
@@ -32,7 +32,7 @@ router.post('/:cid/product/:pid', async (req, res) => {
     await cartManager.addToCart(cid, pid)
     res.send({mensaje: 'Producto agregado al carrito'})
   } catch (error) {
-    console.log(error);
+    return error;
   }
 })
 
