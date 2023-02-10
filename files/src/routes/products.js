@@ -1,9 +1,9 @@
 import { Router } from 'express'
-import { ProductManager } from '../classManager/productManager.js'
+import { ProductManager } from '../productManager.js'
 
 const router = Router()
 
-const productManager = new ProductManager("../persistFileSystem/productos.json")
+const productManager = new ProductManager()
 
 router.get('/', async (req, res) => {
   const { limit } = req.query
@@ -13,7 +13,7 @@ router.get('/', async (req, res) => {
 
     limit ? res.send(data.slice(0,limit)) : res.send(data)
   } catch (error) {
-    return  error;
+    console.log(error);
   }
 })
 
@@ -25,7 +25,7 @@ router.get('/:pid', async (req, res) => {
 
     pid ? res.send(data.slice(pid - 1, pid)) : res.send(data)
   } catch (error) {
-    return  error;
+    console.log(error);
   }
 })
 
@@ -36,17 +36,17 @@ router.post('/', async (req, res) => {
   if (!newItem.title || !newItem.description || !newItem.price || !newItem.thumbnail || !newItem.code || !newItem.stock || !newItem.category)  {
     return res.send({mensaje: 'Debe completar todos los campos'})
   }
-  const productDb = await productManager.getProducts()
+  let productDb = await productManager.getProducts()
   const data = await productDb.find(product => product.code === newItem.code)
 
   if (data) {
-      res.send({mensaje: 'El código de producto ya existe'})
+     res.send({mensaje: 'El código de producto ya existe'})
   } else {
     try {
       await productManager.addProduct(newItem)
       res.send({mensaje: 'Producto agregado'})
     } catch (error) {
-    return  error;
+    console.log(error);
     }
   }
 })
@@ -63,7 +63,7 @@ router.put('/:pid', async (req, res) => {
       await productManager.updateProduct(pid, prod)
       res.send({mensaje: 'Producto actualizado'})
     } catch (error) {
-      return  error;
+      console.log(error);
     }
   }
 })
@@ -75,7 +75,7 @@ router.delete('/:pid', async (req, res) => {
     await productManager.deleteProduct(pid)
     res.send({mensaje: 'Producto eliminado'})
   } catch (error) {
-    return  error;
+    console.log(error);
   }
 })
 
